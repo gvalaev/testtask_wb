@@ -1,4 +1,5 @@
 import drivermanager.DriverManager;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 public class BaseTest {
@@ -10,5 +11,10 @@ public class BaseTest {
     public static void initChromeDriver() {
         DriverManager.setDriver("chrome");
         DriverManager.setDriverWait();
+    }
+
+    @AfterAll
+    public static void closeChromeDriver() {
+        DriverManager.quitDriver();
     }
 }

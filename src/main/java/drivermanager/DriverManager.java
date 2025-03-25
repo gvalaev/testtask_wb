@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Objects;
 
@@ -24,7 +25,11 @@ public class DriverManager {
             case "yandex" -> "yandexdriver.exe";
             default -> throw new IllegalArgumentException("Не знаю такого браузера: " + browserName);
         };
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\src\\main\\resources\\webdrivers\\" + driverFileName);
+        File driverFile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\webdrivers\\" + driverFileName);
+        if (!driverFile.exists()) {
+            throw new RuntimeException("Файл вебдрайвера не обнаружен");
+        }
+        System.setProperty("webdriver.chrome.driver", driverFile.getAbsolutePath());
         driver = new ChromeDriver(chromeOptions);
     }
 
@@ -34,6 +39,7 @@ public class DriverManager {
      * @return объект драйвера
      */
     public static WebDriver getDriver() {
+        Objects.requireNonNull(driver, "Драйвер не был проинициализирован");
         return driver;
     }
 
@@ -54,7 +60,8 @@ public class DriverManager {
     public static void quitDriver() {
         if (driver != null) {
             driver.quit();
-            System.out.println(Thread.currentThread().getId());
+            driver = null;
+            driverWait = null;
         }
     }
 
@@ -74,11 +81,8 @@ public class DriverManager {
      * @return объект вебдрайвервейта
      */
     public static WebDriverWait getDriverWait() {
-        if (driverWait == null) {
-            throw new IllegalStateException("Драйвер ожидания не был проинициализирован");
-        }
-        return
-                driverWait;
+        Objects.requireNonNull(driverWait, "Драйвервейт не был проинициализирован");
+        return driverWait;
     }
 
     /**

@@ -19,7 +19,7 @@ public class DriverManager {
     private static void init(String browserName) {
         Objects.requireNonNull(browserName, "Имя браузера не должно быть пустым");
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--ignore-certificate-errors", "--disable-notifications", "--headless");
+        chromeOptions.addArguments("--ignore-certificate-errors", "--disable-notifications", "--start-maximized");
         String driverFileName = switch (browserName.toLowerCase()) {
             case "chrome" -> "chromedriver.exe";
             case "yandex" -> "yandexdriver.exe";

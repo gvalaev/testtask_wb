@@ -1,5 +1,6 @@
 package steps;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 
 import static drivermanager.DriverManager.getDriver;

@@ -2,7 +2,7 @@ import drivermanager.DriverManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-public class BaseTest {
+sealed class BaseTest permits ProductCardPageTest, BusketPageTest {
     /**
      * Инициализируем вебдрайвер. Подходящие имена браузера: chrome, yandex.
      * Инициализируем вебдрайвервейт.
@@ -13,6 +13,9 @@ public class BaseTest {
         DriverManager.setDriverWait();
     }
 
+    /**
+     * Закрываем браузер, обнуляем драйвера
+     */
     @AfterAll
     public static void closeChromeDriver() {
         DriverManager.quitDriver();

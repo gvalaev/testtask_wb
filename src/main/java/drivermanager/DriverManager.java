@@ -19,7 +19,7 @@ public class DriverManager {
     private static void init(String browserName) {
         Objects.requireNonNull(browserName, "Имя браузера не должно быть пустым");
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless", "--disable-dev-shm-usage", "--ignore-certificate-errors");
+        chromeOptions.addArguments("--ignore-certificate-errors", "--disable-notifications", "--headless");
         String driverFileName = switch (browserName.toLowerCase()) {
             case "chrome" -> "chromedriver.exe";
             case "yandex" -> "yandexdriver.exe";
@@ -27,7 +27,7 @@ public class DriverManager {
         };
         File driverFile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\webdrivers\\" + driverFileName);
         if (!driverFile.exists()) {
-            throw new RuntimeException("Файл вебдрайвера не обнаружен");
+            throw new RuntimeException("Файл вебдрайвера \"" + browserName + "\" не обнаружен");
         }
         System.setProperty("webdriver.chrome.driver", driverFile.getAbsolutePath());
         driver = new ChromeDriver(chromeOptions);
